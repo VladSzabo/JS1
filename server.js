@@ -1,14 +1,12 @@
-const http = require('http');
+var koa = require('koa');
+var serve = require('koa-static');
+var router = require('koa-router')();
 
-const hostname = '127.0.0.1';
-const port = 80;
+var app = koa();
+app.use(serve('.'));
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
-});
+app
+  .use(router.routes())
+  .use(router.allowedMethods());
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+app.listen(80);
